@@ -5,7 +5,7 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
 const team = await getCollection('team');
 ---
 <Base title="Fixture Studio">
-  <h1>Fixture Studio</h1>
+  <h1>My Studio</h1>
   <h2>Services</h2>
   <ul>{services.map((s) => <li><strong>{s.data.title}</strong> — {s.data.summary}</li>)}</ul>
   <h2>Team</h2>
