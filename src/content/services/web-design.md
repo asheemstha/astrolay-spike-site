@@ -1,6 +1,6 @@
 ---
 title: Web design
-summary: Fast, accessible marketing sites.
+summary: Fast, accessible, easy-to-update marketing sites.
 price: 2400
 order: 1
 featured: true
