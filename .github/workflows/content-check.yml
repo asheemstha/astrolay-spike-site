@@ -1,0 +1,32 @@
+name: Astrolay
+
+# pull_request_target runs this workflow and the check script from main, not
+# from the PR, so a collaborator can't edit the check to pass. The PR's files
+# are only read as data (git show); nothing from the PR is executed.
+on:
+  pull_request_target:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  content-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Fetch PR commits (not checked out)
+        run: git fetch --no-tags origin "+refs/pull/${{ github.event.pull_request.number }}/head:refs/remotes/pr/head"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check changes against astrolay.json
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: node .github/scripts/content-check.mjs

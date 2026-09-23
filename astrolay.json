@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "builders": ["asheemstha"],
+  "client": {
+    "collections": {
+      "services": {
+        "path": "src/content/services",
+        "fields": ["title", "summary", "price"],
+        "body": true,
+        "create": false,
+        "delete": false
+      },
+      "team": {
+        "file": "src/data/team.json",
+        "key": "id",
+        "fields": ["name", "role"],
+        "create": true,
+        "delete": false
+      }
+    },
+    "media": ["public/uploads"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "astrolay-spike-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "sync": "astro sync"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.0.2",
+    "astro": "^7.3.4"
+  }
+}
