@@ -1,0 +1,57 @@
+---
+import { marquee } from '../../data/home';
+// Two identical groups so the track can loop seamlessly at -50%.
+const items = [...marquee, ...marquee];
+---
+<section class="marquee" aria-label={marquee.join(', ')}>
+  <div class="marquee__track" data-marquee>
+    {[0, 1].map((copy) => (
+      <div class="marquee__group" aria-hidden="true" data-copy={copy}>
+        {items.map((item) => (
+          <span class="marquee__item" data-marquee-item>
+            {item}
+            <svg class="marquee__star" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0Z" fill="currentColor" />
+            </svg>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    padding-block: var(--section-gap) calc(var(--section-gap) * 0.6);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee__group {
+    display: flex;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding-right: 0.35em;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(4rem, 12vw, 12rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+
+  .marquee__star {
+    width: 0.4em;
+    height: 0.4em;
+    color: var(--color-primary);
+  }
+</style>

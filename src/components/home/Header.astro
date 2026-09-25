@@ -1,0 +1,70 @@
+---
+import { brand, nav } from '../../data/home';
+---
+<header class="header" data-header>
+  <a href="#top" class="header__logo" aria-label={`${brand.name} Estates, back to top`}>
+    {brand.name}<sup>®</sup>
+  </a>
+  <nav aria-label="Main">
+    <ul class="header__nav">
+      {nav.map((item) => (
+        <li>
+          <a href={item.href} class="roll"><span data-text={item.label}>{item.label}</span></a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <a href="#contact" class="btn header__cta" data-magnetic>Book a viewing</a>
+</header>
+
+<style>
+  /* Blends against whatever is behind it, so it stays legible on light and dark sections */
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-4) var(--container-padding);
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+
+  .header__logo {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    line-height: 1;
+    text-decoration: none;
+
+    & sup {
+      font-family: var(--font-sans);
+      font-size: 0.4em;
+      vertical-align: super;
+    }
+  }
+
+  .header__nav {
+    display: flex;
+    gap: var(--space-8);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+
+  .header__cta {
+    padding: 0.7em 1.25em;
+
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+
+  @media (max-width: 767px) {
+    nav {
+      display: none;
+    }
+  }
+</style>

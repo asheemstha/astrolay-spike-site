@@ -1,0 +1,234 @@
+---
+import { brand, footerLinks } from '../../data/home';
+const year = new Date().getFullYear();
+---
+<footer class="footer" id="contact" data-footer>
+  <div class="footer__inner" data-footer-inner>
+    <div class="container footer__cta">
+      <span class="label">(06) Contact</span>
+      <h2 class="footer__title" data-split-lines>Let’s find your <em>place</em></h2>
+      <a href={`mailto:${brand.email}`} class="footer__circle" data-magnetic data-cursor-label="Email us">
+        <span>Book a<br />viewing ↗</span>
+      </a>
+    </div>
+
+    <div class="container footer__grid">
+      <form class="newsletter" data-newsletter>
+        <label for="newsletter-email" class="label">New listings, first</label>
+        <div class="newsletter__row">
+          <input id="newsletter-email" type="email" name="email" placeholder="you@email.com" required autocomplete="email" />
+          <button type="submit" aria-label="Subscribe">→</button>
+        </div>
+        <p class="newsletter__status" data-newsletter-status role="status"></p>
+      </form>
+
+      {footerLinks.map((col) => (
+        <div class="footer__col">
+          <p class="label">{col.title}</p>
+          <ul>
+            {col.links.map((link) => (
+              <li><a href="#" class="roll"><span data-text={link}>{link}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <address class="footer__col">
+        <p class="label">Visit</p>
+        {brand.address.map((line) => <span>{line}</span>)}
+        <a href={`tel:${brand.phone.replace(/[^+\d]/g, '')}`}>{brand.phone}</a>
+        <a href={`mailto:${brand.email}`}>{brand.email}</a>
+      </address>
+    </div>
+
+    <div class="footer__wordmark" data-wordmark aria-hidden="true">
+      {brand.name.split('').map((char) => <span>{char}</span>)}
+    </div>
+
+    <div class="container footer__bottom label">
+      <span>© {year} {brand.name} Estates</span>
+      <span>Licensed real estate broker · DRE #01234567</span>
+      <a href="#top" class="roll"><span data-text="Back to top ↑">Back to top ↑</span></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    overflow: hidden;
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+
+  .footer__inner {
+    padding-top: var(--section-gap);
+  }
+
+  .footer__cta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--space-6);
+
+    & .label {
+      grid-column: 1 / -1;
+      color: var(--color-cream-muted);
+    }
+  }
+
+  .footer__title {
+    font-size: clamp(3.5rem, 1rem + 9vw, 10rem);
+    line-height: 0.95;
+
+    & em {
+      color: var(--color-primary);
+    }
+  }
+
+  .footer__circle {
+    display: grid;
+    place-items: center;
+    width: clamp(8rem, 14vw, 12rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-cream);
+    text-align: center;
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: 1.3;
+    transition: background-color 0.4s;
+
+    &:hover {
+      background: var(--color-cream);
+      color: var(--color-ink);
+    }
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: var(--space-8);
+    margin-top: var(--section-gap);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-line-dark);
+  }
+
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-style: normal;
+    font-size: var(--text-sm);
+
+    & .label {
+      margin-bottom: var(--space-2);
+      color: var(--color-cream-muted);
+    }
+
+    & ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      text-decoration: none;
+    }
+  }
+
+  .newsletter {
+    max-width: 24rem;
+
+    & .label {
+      color: var(--color-cream-muted);
+    }
+  }
+
+  .newsletter__row {
+    display: flex;
+    margin-top: var(--space-4);
+    border-bottom: 1px solid var(--color-cream-muted);
+
+    & input {
+      flex: 1;
+      min-width: 0;
+      padding: var(--space-3) 0;
+      border: 0;
+      background: transparent;
+      font-size: var(--text-lg);
+      outline: none;
+
+      &::placeholder {
+        color: rgb(241 236 228 / 0.35);
+      }
+    }
+
+    & button {
+      border: 0;
+      background: transparent;
+      font-size: var(--text-2xl);
+      transition: translate 0.4s var(--ease-out);
+
+      &:hover {
+        translate: 0.3rem 0;
+      }
+    }
+
+    &:focus-within {
+      border-color: var(--color-cream);
+    }
+  }
+
+  .newsletter__status {
+    min-height: 1.5em;
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+  }
+
+  .footer__wordmark {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--section-gap);
+    padding-inline: var(--container-padding);
+    overflow: clip;
+    font-family: var(--font-display);
+    font-size: 33vw;
+    line-height: 0.75;
+    letter-spacing: -0.04em;
+
+    & span {
+      display: inline-block;
+      padding-bottom: 0.02em;
+    }
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+    color: var(--color-cream-muted);
+  }
+
+  @media (max-width: 899px) {
+    .footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .newsletter {
+      grid-column: 1 / -1;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .footer__cta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

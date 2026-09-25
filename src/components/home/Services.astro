@@ -1,0 +1,162 @@
+---
+import { services, photo } from '../../data/home';
+---
+<section class="services container" id="services" data-services>
+  <div class="services__head">
+    <span class="label">(04) Services</span>
+    <h2 class="services__title" data-split-lines>Everything, under <em>one roof</em></h2>
+  </div>
+
+  <ol class="services__list" data-services-list>
+    {services.map((s, i) => (
+      <li class="services__row" data-service>
+        <span class="services__line" data-service-line></span>
+        <span class="label services__num">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="services__name">{s.title}</h3>
+        <p class="services__text">{s.text}</p>
+        <span class="services__arrow" aria-hidden="true">↗</span>
+      </li>
+    ))}
+  </ol>
+
+  <!-- Floating image that follows the pointer over the list (moved to <body> by services.ts) -->
+  <div class="services-preview" data-service-preview aria-hidden="true">
+    {services.map((s) => (
+      <img src={photo(s.image, 600, 760)} width="600" height="760" alt="" loading="lazy" data-service-img />
+    ))}
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: calc(var(--section-gap) / 2) var(--section-gap);
+  }
+
+  .services__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+
+    & .label {
+      color: var(--color-cream-muted);
+    }
+  }
+
+  .services__title {
+    font-size: clamp(2.75rem, 1.5rem + 5vw, 6.5rem);
+
+    & em {
+      color: var(--color-primary);
+    }
+  }
+
+  .services__list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .services__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1.2fr) minmax(0, 1fr) 3rem;
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+    cursor: default;
+
+    &:last-child {
+      border-bottom: 1px solid var(--color-line-dark);
+    }
+  }
+
+  .services__line {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: var(--color-line-dark);
+    transform-origin: left;
+  }
+
+  .services__num {
+    color: var(--color-cream-muted);
+  }
+
+  .services__name {
+    font-size: clamp(2.25rem, 1rem + 4vw, 5rem);
+    transition: translate 0.6s var(--ease-out), color 0.4s;
+  }
+
+  .services__text {
+    max-width: 24rem;
+    color: var(--color-cream-muted);
+    font-size: var(--text-sm);
+  }
+
+  .services__arrow {
+    justify-self: end;
+    font-size: var(--text-2xl);
+    transition: rotate 0.6s var(--ease-out), color 0.4s;
+  }
+
+  .services__row:hover {
+    & .services__name {
+      translate: 1.25rem 0;
+      color: var(--color-primary);
+    }
+
+    & .services__arrow {
+      rotate: 45deg;
+      color: var(--color-primary);
+    }
+  }
+
+  /* Rows fade back when another is hovered */
+  @media (hover: hover) {
+    .services__list:hover .services__row:not(:hover) {
+      opacity: 0.35;
+    }
+
+    .services__row {
+      transition: opacity 0.4s;
+    }
+  }
+
+  .services-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    width: clamp(14rem, 20vw, 20rem);
+    aspect-ratio: 6 / 7.6;
+    overflow: hidden;
+    border-radius: var(--radius);
+    pointer-events: none;
+    visibility: hidden;
+
+    & img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .services__row {
+      grid-template-columns: 2.5rem 1fr;
+      gap: var(--space-2) var(--space-4);
+      padding-block: var(--space-6);
+    }
+
+    .services__text {
+      grid-column: 2;
+    }
+
+    .services__arrow {
+      display: none;
+    }
+  }
+</style>

@@ -1,13 +1,44 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const team = await getCollection('team');
+import Preloader from '../components/home/Preloader.astro';
+import Cursor from '../components/home/Cursor.astro';
+import Header from '../components/home/Header.astro';
+import Hero from '../components/home/Hero.astro';
+import Marquee from '../components/home/Marquee.astro';
+import Intro from '../components/home/Intro.astro';
+import Listings from '../components/home/Listings.astro';
+import Stats from '../components/home/Stats.astro';
+import Services from '../components/home/Services.astro';
+import Showcase from '../components/home/Showcase.astro';
+import Advisors from '../components/home/Advisors.astro';
+import Footer from '../components/home/Footer.astro';
+import { brand } from '../data/home';
 ---
-<Base title="Fixture Studio">
-  <h1>Fixture Studio</h1>
-  <h2>Services</h2>
-  <ul>{team.map((m) => <li>{m.data.name}, {m.data.role}</li>)}</ul>
-  <h2>Team</h2>
-  <ul>{services.map((s) => <li><strong>{s.data.title}</strong> — {s.data.summary}</li>)}</ul>
+<Base title={`${brand.name} Estates — Homes with a story worth living`} description={brand.tagline}>
+  <Preloader />
+  <Cursor />
+  <Header />
+  <main>
+    <Hero />
+    <Marquee />
+    <Intro />
+    <Listings />
+    <div class="dark" data-dark>
+      <Stats />
+      <Services />
+    </div>
+    <Showcase />
+    <Advisors />
+  </main>
+  <Footer />
 </Base>
+
+<script src="../scripts/home/index.ts"></script>
+
+<style>
+  .dark {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+</style>

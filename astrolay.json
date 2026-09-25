@@ -19,5 +19,8 @@
       }
     },
     "media": ["public/uploads"]
+  },
+  "design": {
+    "breakpoints": {}
   }
 }

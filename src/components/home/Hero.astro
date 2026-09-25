@@ -1,0 +1,232 @@
+---
+import { hero, photo } from '../../data/home';
+const [first, second, third] = hero.lines;
+---
+<section class="hero" id="top">
+  <div class="hero__head container">
+    <h1 class="hero__title" data-hero-title data-reveal>
+      <span class="hero__line">{first}</span>
+      <span class="hero__line hero__line--indent">{second}</span>
+      <span class="hero__line hero__line--end"><em>{third}</em></span>
+    </h1>
+    <div class="hero__meta">
+      <p class="hero__intro" data-hero-fade data-reveal>
+        Boutique real estate for people who care how a place feels — across California, Oregon and beyond.
+      </p>
+      <span class="label hero__scroll" data-hero-fade data-reveal>(Scroll to explore)</span>
+    </div>
+  </div>
+
+  <div class="hero__media" data-hero-media>
+    <div class="hero__reveal" data-hero-reveal data-reveal>
+      <div class="hero__parallax" data-hero-parallax>
+        <img
+          data-hero-img
+          src={photo(hero.image, 2000)}
+          srcset={`${photo(hero.image, 900)} 900w, ${photo(hero.image, 1400)} 1400w, ${photo(hero.image, 2000)} 2000w, ${photo(hero.image, 2800)} 2800w`}
+          sizes="100vw"
+          width="2000"
+          height="1333"
+          alt={hero.imageAlt}
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+
+    <form class="search" role="search" data-hero-fade data-reveal onsubmit="event.preventDefault()">
+      <label class="search__field">
+        <span class="label">Location</span>
+        <input type="text" name="location" placeholder="City, neighbourhood or ZIP" />
+      </label>
+      <label class="search__field">
+        <span class="label">Type</span>
+        <select name="type">
+          <option>Any home</option>
+          <option>House</option>
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Land</option>
+        </select>
+      </label>
+      <label class="search__field">
+        <span class="label">Budget</span>
+        <select name="budget">
+          <option>No limit</option>
+          <option>Up to $1M</option>
+          <option>$1M – $3M</option>
+          <option>$3M+</option>
+        </select>
+      </label>
+      <button type="submit" class="search__submit" aria-label="Search homes" data-magnetic>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path>
+        </svg>
+      </button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(6rem, 12vh, 9rem);
+  }
+
+  .hero__title {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(3.5rem, 11.5vw, 12.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  .hero__line--indent {
+    padding-left: 12vw;
+  }
+
+  .hero__line--end {
+    align-self: flex-end;
+    color: var(--color-primary);
+  }
+
+  /* SplitText line masks: give descenders and italics room so they aren't clipped */
+  .hero__title :global(.split-line-mask) {
+    padding: 0 0.08em 0.12em;
+    margin: 0 -0.08em -0.12em;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .hero__intro {
+    max-width: 26rem;
+    color: var(--color-text-muted);
+  }
+
+  .hero__media {
+    position: relative;
+    height: min(88vh, 60rem);
+    clip-path: inset(0% var(--container-padding) 0% var(--container-padding) round var(--radius-lg));
+  }
+
+  .hero__reveal,
+  .hero__parallax {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .hero__parallax img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+  }
+
+  .search {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1rem, 4vw, 3rem);
+    translate: -50% 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: min(52rem, calc(100% - 2 * var(--container-padding) - 2rem));
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+    border-radius: 999px;
+    background: rgb(241 236 228 / 0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .search__field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    padding: var(--space-2) var(--space-4) var(--space-2) 0;
+
+    & + & {
+      padding-left: var(--space-4);
+      border-left: 1px solid var(--color-border);
+    }
+
+    & .label {
+      color: var(--color-text-muted);
+      font-size: 0.625rem;
+    }
+
+    & input,
+    & select {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: var(--text-sm);
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    &:focus-within {
+      color: var(--color-primary);
+    }
+  }
+
+  .search__submit {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: var(--color-primary);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero__line--indent {
+      padding-left: 8vw;
+    }
+
+    .hero__media {
+      height: 75svh;
+    }
+
+    .search {
+      flex-wrap: wrap;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .search__field {
+      flex-basis: 40%;
+
+      & + & {
+        padding-left: 0;
+        border-left: 0;
+      }
+    }
+
+    .search__submit {
+      width: 100%;
+      border-radius: 999px;
+      height: 3rem;
+    }
+  }
+</style>

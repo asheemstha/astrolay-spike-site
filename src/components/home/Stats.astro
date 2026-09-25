@@ -1,0 +1,87 @@
+---
+import { stats } from '../../data/home';
+
+const format = (s: (typeof stats)[number], value = s.value) =>
+  `${s.prefix ?? ''}${value.toLocaleString('en-US', { minimumFractionDigits: s.decimals ?? 0, maximumFractionDigits: s.decimals ?? 0 })}${s.suffix}`;
+---
+<section class="stats container" aria-label="Maren in numbers">
+  <span class="label stats__label">(03) In numbers</span>
+  <ul class="stats__list">
+    {stats.map((s) => (
+      <li class="stats__row" data-stat-row>
+        <span class="stats__line" data-stat-line></span>
+        <p class="stats__figure">
+          <span
+            data-count={s.value}
+            data-decimals={s.decimals ?? 0}
+            data-prefix={s.prefix ?? ''}
+            data-suffix={s.suffix}
+          >{format(s)}</span>
+          <em data-stat-fade>{s.label}</em>
+        </p>
+        <p class="stats__note" data-stat-fade>{s.note}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .stats {
+    padding-block: var(--section-gap) calc(var(--section-gap) / 2);
+  }
+
+  .stats__label {
+    color: var(--color-cream-muted);
+  }
+
+  .stats__list {
+    margin-top: var(--space-8);
+    padding: 0;
+    list-style: none;
+  }
+
+  .stats__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr minmax(12rem, 20rem);
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-4);
+  }
+
+  .stats__line {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: var(--color-line-dark);
+    transform-origin: left;
+  }
+
+  .stats__figure {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 1rem + 10vw, 11rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    & em {
+      display: inline-block;
+      margin-left: 0.15em;
+      color: var(--color-primary);
+    }
+  }
+
+  .stats__note {
+    color: var(--color-cream-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 767px) {
+    .stats__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+      padding-block: var(--space-6);
+    }
+  }
+</style>

@@ -1,0 +1,221 @@
+---
+import { listings, photo } from '../../data/home';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section class="listings" id="listings" data-listings>
+  <div class="listings__head container">
+    <span class="label">(02) Featured homes</span>
+    <h2 class="listings__title" data-split-lines>Homes we <em>love</em> right now</h2>
+    <a href="#contact" class="roll listings__all"><span data-text="View all listings ↗">View all listings ↗</span></a>
+  </div>
+
+  <div class="listings__track" data-listings-track>
+    {listings.map((home, i) => (
+      <article class="card" data-card data-cursor-label="View">
+        <a href="#contact" class="card__media" aria-label={`Enquire about ${home.name}`}>
+          {home.tag && <span class="card__tag label">● {home.tag}</span>}
+          <span class="card__index label">{pad(i + 1)}</span>
+          <img
+            data-card-img
+            src={photo(home.image, 1000, 1100)}
+            width="1000"
+            height="1100"
+            alt={`${home.name}, ${home.location}`}
+            loading="lazy"
+          />
+        </a>
+        <div class="card__body">
+          <h3 class="card__title">{home.name} <span aria-hidden="true">↗</span></h3>
+          <p class="card__price">{home.price}</p>
+          <p class="card__location label">{home.location}</p>
+          <ul class="card__specs label">
+            <li>{home.beds} Beds</li>
+            <li>{home.baths} Baths</li>
+            <li>{home.area}</li>
+          </ul>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="listings__progress container" aria-hidden="true">
+    <span class="label"><span data-listings-count>01</span> / {pad(listings.length)}</span>
+    <div class="listings__bar"><span data-listings-bar></span></div>
+    <span class="label">Scroll</span>
+  </div>
+</section>
+
+<style>
+  .listings {
+    padding-block: var(--space-12);
+  }
+
+  .listings__head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--space-4) var(--space-8);
+    margin-bottom: var(--space-8);
+
+    & .label {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .listings__title {
+    font-size: clamp(2.75rem, 1.5rem + 5vw, 6.5rem);
+
+    & em {
+      color: var(--color-primary);
+    }
+  }
+
+  .listings__all {
+    padding-bottom: 0.6em;
+    font-size: var(--text-sm);
+  }
+
+  .listings__track {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-inline: var(--container-padding);
+    width: max-content;
+  }
+
+  .card {
+    width: clamp(18rem, 30vw, 30rem);
+  }
+
+  .card__media {
+    position: relative;
+    display: block;
+    height: min(52vh, 34rem);
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--color-surface);
+
+    & img {
+      width: 120%;
+      max-width: none;
+      height: 100%;
+      margin-left: -10%;
+      object-fit: cover;
+      transition: scale 1.2s var(--ease-out);
+    }
+
+    &:hover img {
+      scale: 1.06;
+    }
+  }
+
+  .card__tag,
+  .card__index {
+    position: absolute;
+    top: var(--space-4);
+    z-index: 1;
+    padding: 0.45em 0.8em;
+    border-radius: 999px;
+    color: #fff;
+  }
+
+  .card__tag {
+    left: var(--space-4);
+    border: 1px solid rgb(255 255 255 / 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .card__index {
+    right: var(--space-2);
+  }
+
+  .card__body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1) var(--space-4);
+    padding-top: var(--space-4);
+  }
+
+  .card__title {
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+  }
+
+  .card__price {
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  .card__location {
+    color: var(--color-text-muted);
+  }
+
+  .card__specs {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+    padding: var(--space-3) 0 0;
+    border-top: 1px solid var(--color-border);
+    list-style: none;
+    color: var(--color-text-muted);
+  }
+
+  .listings__progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  .listings__bar {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+
+    & span {
+      display: block;
+      height: 100%;
+      background: var(--color-text);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+  }
+
+  /* Desktop: the whole section is pinned and the track scrolls sideways (see listings.ts) */
+  @media (min-width: 900px) {
+    .listings {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .listings__track {
+      flex-direction: column;
+      width: auto;
+      gap: var(--space-12);
+    }
+
+    .card {
+      width: 100%;
+    }
+
+    .card__media {
+      height: auto;
+      aspect-ratio: 4 / 5;
+
+      & img {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    .listings__progress {
+      display: none;
+    }
+  }
+</style>

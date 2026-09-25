@@ -1,0 +1,73 @@
+---
+import { showcase, photo } from '../../data/home';
+---
+<section class="showcase" data-showcase>
+  <div class="showcase__frame" data-showcase-frame>
+    <img
+      data-showcase-img
+      src={photo(showcase.image, 2400)}
+      srcset={`${photo(showcase.image, 1000)} 1000w, ${photo(showcase.image, 1600)} 1600w, ${photo(showcase.image, 2400)} 2400w`}
+      sizes="100vw"
+      width="2400"
+      height="1600"
+      alt={showcase.imageAlt}
+      loading="lazy"
+    />
+    <blockquote class="showcase__quote">
+      <p data-showcase-quote>“{showcase.quote}”</p>
+      <cite class="label" data-showcase-cite>— {showcase.author}</cite>
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .showcase__frame {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    color: var(--color-cream);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgb(20 19 17 / 0.75), rgb(20 19 17 / 0.1) 60%);
+    }
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .showcase__quote {
+    position: absolute;
+    inset: auto var(--container-padding) clamp(2rem, 8vh, 5rem);
+    z-index: 1;
+    max-width: 60rem;
+    padding: 0;
+    border: 0;
+    color: inherit;
+
+    & p {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 1rem + 3.5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    & cite {
+      display: block;
+      margin-top: var(--space-6);
+      font-style: normal;
+      color: var(--color-cream-muted);
+    }
+  }
+</style>

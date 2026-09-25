@@ -1,0 +1,67 @@
+---
+import { brand } from '../../data/home';
+---
+<div class="preloader" data-preloader aria-hidden="true">
+  <div class="preloader__top">
+    <span class="label">{brand.name} Estates</span>
+    <span class="label">Opening doors</span>
+  </div>
+  <div class="preloader__count">
+    <span data-preloader-count>000</span>
+  </div>
+  <div class="preloader__bar"><span data-preloader-bar></span></div>
+</div>
+
+<style>
+  .preloader {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--container-padding);
+    background: var(--color-ink);
+    color: var(--color-cream);
+    clip-path: inset(0% 0% 0% 0%);
+  }
+
+  /* Only shown when JS runs and the visitor allows motion */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .preloader {
+      display: flex;
+    }
+  }
+
+  .preloader__top {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-cream-muted);
+  }
+
+  .preloader__count {
+    overflow: clip;
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 22vw, 20rem);
+    line-height: 0.85;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+
+    & span {
+      display: inline-block;
+    }
+  }
+
+  .preloader__bar {
+    height: 1px;
+    background: var(--color-line-dark);
+
+    & span {
+      display: block;
+      height: 100%;
+      background: var(--color-cream);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+  }
+</style>

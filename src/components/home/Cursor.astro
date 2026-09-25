@@ -1,0 +1,44 @@
+---
+// Custom cursor: a dot that trails the pointer and grows into a labelled disc
+// over elements with data-cursor-label="…". Hidden on touch devices.
+---
+<div class="cursor" data-cursor aria-hidden="true">
+  <span class="cursor__label" data-cursor-label></span>
+</div>
+
+<style>
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .cursor:global(.is-label) {
+    background: var(--color-primary);
+    mix-blend-mode: normal;
+  }
+
+  .cursor__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-cream);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .cursor:global(.is-label) .cursor__label {
+    opacity: 1;
+  }
+</style>
