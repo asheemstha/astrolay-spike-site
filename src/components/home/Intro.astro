@@ -17,8 +17,9 @@ const badge = 'Trusted since 2009 • Boutique real estate • ';
         <defs>
           <path id="badge-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
         </defs>
-        <text>
-          <textPath href="#badge-circle">{badge.repeat(2)}</textPath>
+        <!-- textLength stretches the text to exactly one lap of the circle (2π × 78) -->
+        <text textLength="488" lengthAdjust="spacing">
+          <textPath href="#badge-circle" textLength="488" lengthAdjust="spacing">{badge}</textPath>
         </text>
       </svg>
       <span class="intro__badge-star">✺</span>
@@ -115,7 +116,6 @@ const badge = 'Trusted since 2009 • Boutique real estate • ';
     & text {
       font-family: var(--font-mono);
       font-size: 13.5px;
-      letter-spacing: 0.12em;
       text-transform: uppercase;
       fill: currentColor;
     }

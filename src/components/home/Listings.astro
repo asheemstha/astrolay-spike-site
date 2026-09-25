@@ -71,7 +71,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   }
 
   .listings__all {
-    padding-bottom: 0.6em;
+    margin-bottom: 0.6em;
     font-size: var(--text-sm);
   }
 
@@ -127,6 +127,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .card__index {
     right: var(--space-2);
+    mix-blend-mode: difference;
   }
 
   .card__body {
@@ -139,6 +140,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .card__title {
     font-size: var(--text-3xl);
     line-height: 1.1;
+
+    & span {
+      font-size: 0.6em;
+      vertical-align: 0.25em;
+    }
   }
 
   .card__price {

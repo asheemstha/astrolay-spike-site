@@ -1,6 +1,6 @@
 // Services: rows draw in on scroll; on desktop a floating image preview follows
 // the pointer and swaps to the hovered service, tilting with pointer speed.
-import { gsap, $, $$, MOTION_OK, FINE_POINTER } from '../gsap';
+import { gsap, ScrollTrigger, $, $$, MOTION_OK, FINE_POINTER } from '../gsap';
 
 export function initServices() {
   const list = $('[data-services-list]');
@@ -60,7 +60,11 @@ export function initServices() {
     list.addEventListener('pointerenter', onEnter);
     list.addEventListener('pointerleave', onLeave);
 
+    // Scrolling can carry the list out from under a still pointer without a pointerleave.
+    const scrollGuard = ScrollTrigger.create({ trigger: list, onLeave, onLeaveBack: onLeave });
+
     return () => {
+      scrollGuard.kill();
       list.removeEventListener('pointermove', onMove);
       list.removeEventListener('pointerenter', onEnter);
       list.removeEventListener('pointerleave', onLeave);
